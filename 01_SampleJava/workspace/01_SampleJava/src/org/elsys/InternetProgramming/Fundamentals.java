@@ -16,5 +16,15 @@ public class Fundamentals {
 		
 		System.out.println(a == b);
 		System.out.println(a.equals(b));
+		
+		Fundamentals fundamentals = new Fundamentals();
+		fundamentals = new Fundamentals();
+
+		Fundamentals fundamentalsFinal = new Fundamentals();
+		fundamentals = new Fundamentals();
+	}
+	
+	public String getSomething() {
+		return "Hello World!";
 	}
 }
