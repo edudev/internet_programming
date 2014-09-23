@@ -17,14 +17,41 @@ public class Fundamentals {
 		System.out.println(a == b);
 		System.out.println(a.equals(b));
 		
-		Fundamentals fundamentals = new Fundamentals();
-		fundamentals = new Fundamentals();
+		final Fundamentals fundamentals = new Fundamentals();
+		
+		final String result = fundamentals.getSomething();
+		System.out.println(result);
+		
+		fundamentals.doSomething();
+		
+		final String longString = fundamentals.getSomething("Smiley");
+		System.out.println(longString);
 
-		Fundamentals fundamentalsFinal = new Fundamentals();
-		fundamentals = new Fundamentals();
+		if (fundamentals.isCool(4)) {
+			System.out.println("4: yes it is");
+		}
+
+		if (fundamentals.isCool(-1)) {
+			System.out.println("-1: yes it is");
+		}
 	}
 	
 	public String getSomething() {
 		return "Hello World!";
+	}
+	
+	public String getSomething(String name) {
+		return "Hello " + name;
+	}
+	
+	public void doSomething() {
+		// nothing
+	}
+	
+	public boolean isCool(int n) {
+		if (n > 0) {
+			return true;
+		}
+		return false;
 	}
 }
