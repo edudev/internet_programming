@@ -34,6 +34,8 @@ public class Fundamentals {
 		if (fundamentals.isCool(-1)) {
 			System.out.println("-1: yes it is");
 		}
+
+		System.out.println(fundamentals.count(3,  5));
 	}
 	
 	public String getSomething() {
@@ -53,5 +55,14 @@ public class Fundamentals {
 			return true;
 		}
 		return false;
+	}
+	
+	public int count (int from, int to) {
+		int result = 0;
+		for (int i = from; i < to; ++i) {
+			++result;
+		}
+		
+		return result;
 	}
 }
