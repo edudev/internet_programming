@@ -10,7 +10,9 @@ public class StreamExample {
 	
 	public static void main(String []args) throws IOException {
 		//inputStreamExample();
-		bufferedReaderExample();
+		//bufferedReaderExample();
+		//readLinecountLetterInLine();
+		readLineGetLength();
 	}
 	
 	public static void inputStreamExample() throws IOException {
@@ -38,5 +40,43 @@ public class StreamExample {
 			++count;
 		}
 		System.out.println("You have entered: " + count + " lines.");
+	}
+	
+	public static String getLine() {
+		final InputStream input = System.in;
+		final InputStreamReader inputStreamReader = new InputStreamReader(input);
+		final BufferedReader reader = new BufferedReader(inputStreamReader);
+
+		try {
+			return reader.readLine();
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
+	public static int countSingleLetter(String line, char letter) {
+		int count = 0;
+		for (int i = 0; i < line.length(); ++i) {
+			if (line.charAt(i) == letter) {
+				++count;
+			}			
+		}
+		
+		return count;
+	}
+	
+	public static int countLineLength(String line) {
+		return line.length();
+	}
+	
+	public static void countLetterInLine() {
+		final String line = getLine();
+		final int count = countSingleLetter(line, 'a');
+		System.out.println("Count is: " + count);
+	}
+	
+	public static void readLineGetLength() {
+		final String line = getLine();
+		System.out.println("Length is: " + countLineLength(line));
 	}
 }
