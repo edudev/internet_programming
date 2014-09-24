@@ -51,3 +51,18 @@ Homework:
 3. Project name: 01_SampleJava
 4. Send name, number in class, email and repository to me (Emil)
 
+
+II. Java
+===============================================================================
+Homework:
+1. fill an associative container
+2. iterate though it
+3. print only the countries witha population above 10 million
+
+2nd homework:
+1. print entered text with capital letters
+
+CSharp course:
+http://tinyurl.com/CSharp2015
+csharp2015@gmail.com
+
