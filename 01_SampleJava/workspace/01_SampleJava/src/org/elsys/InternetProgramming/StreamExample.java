@@ -1,6 +1,9 @@
 package org.elsys.InternetProgramming;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,7 +19,9 @@ public class StreamExample {
 		//readLinecountLetterInLine();
 		//readLineGetLength();
 		
-		readFromURL();
+		//readFromURL();
+		//readFromFile();
+		readFromFileReader();
 	}
 	
 	public static void readFromURL() throws IOException {
@@ -34,6 +39,38 @@ public class StreamExample {
 			reader.close();
 		}
 	}
+
+	public static void readFromFile() throws IOException {
+		final File file = new File("/etc/passwd");
+		final InputStream input = new FileInputStream(file);
+		final InputStreamReader inputStreamReader = new InputStreamReader(input, Charset.forName("UTF-8"));
+		final BufferedReader reader = new BufferedReader(inputStreamReader);
+		
+		try {
+			String readLine;
+			while ((readLine = reader.readLine()) != null) {
+				System.out.println(readLine);
+			}
+		} finally {
+			reader.close();
+		}
+	}
+
+	public static void readFromFileReader() throws IOException {
+		final FileReader inputStreamReader = new FileReader("/etc/passwd");
+		
+		final BufferedReader reader = new BufferedReader(inputStreamReader);
+		
+		try {
+			String readLine;
+			while ((readLine = reader.readLine()) != null) {
+				System.out.println(readLine);
+			}
+		} finally {
+			reader.close();
+		}
+	}
+
 	
 	public static void inputStreamExample() throws IOException {
 		InputStream input = System.in;
