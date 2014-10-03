@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.Charset;
 
 public class StreamExample {
 	public final static String END_READER = "END";
@@ -12,7 +14,25 @@ public class StreamExample {
 		//inputStreamExample();
 		//bufferedReaderExample();
 		//readLinecountLetterInLine();
-		readLineGetLength();
+		//readLineGetLength();
+		
+		readFromURL();
+	}
+	
+	public static void readFromURL() throws IOException {
+		final URL url = new URL("http://172.16.18.186/");
+		final InputStream input = url.openStream();
+		final InputStreamReader inputStreamReader = new InputStreamReader(input, Charset.forName("UTF-8"));
+		final BufferedReader reader = new BufferedReader(inputStreamReader);
+		
+		try {
+			String readLine;
+			while ((readLine = reader.readLine()) != null) {
+				System.out.println(readLine);
+			}
+		} finally {
+			reader.close();
+		}
 	}
 	
 	public static void inputStreamExample() throws IOException {
