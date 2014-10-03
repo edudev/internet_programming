@@ -66,3 +66,6 @@ CSharp course:
 http://tinyurl.com/CSharp2015
 csharp2015@gmail.com
 
+
+Homeworks are due to Sunday 13:30.
+
