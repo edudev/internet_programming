@@ -52,7 +52,7 @@ Homework:
 4. Send name, number in class, email and repository to me (Emil)
 
 
-II. Java
+II. Java containers and streams
 ===============================================================================
 Homework:
 1. fill an associative container
@@ -67,5 +67,24 @@ http://tinyurl.com/CSharp2015
 csharp2015@gmail.com
 
 
+III. Java sockets
+===============================================================================
 Homeworks are due to Sunday 13:30.
+Homework:
+	Server:
+		* reads one line
+		* parse line as date
+		* count days from today to given date
+		* write count to client
+
+	Client:
+		* ask user for date
+		* send date to server
+		* read count from server
+		* show count to user
+
+
+Next time exam:
+	Numbers 1 to 14: 16:50
+	Numbers 15 to 27: 17:35
 
