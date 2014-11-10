@@ -59,7 +59,7 @@ public class HttpClient {
 
 		httpRequest.sendRequest(this.socket.getOutputStream());
 		HttpCharResponse response = new HttpCharResponse(this.socket.getInputStream());
-		if (this.followPath && response.getStatusCode() == 301 || response.getStatusCode() == 302) {
+		if (this.followPath && (response.getStatusCode() == 301 || response.getStatusCode() == 302)) {
 			final String newLocation = response.getHeader("Location");
 			if (newLocation == null) {
 				throw new IllegalStateException("Got a response code requireing the new location");
@@ -78,11 +78,11 @@ public class HttpClient {
 			}
 
 			if (newHost == null) {
-				return getResponse(httpRequest.getMethod(), newPath, httpRequest.getData());
+				response = getResponse(httpRequest.getMethod(), newPath, httpRequest.getData());
 			} else {
 				final HttpClient newClient = new HttpClient(newHost);
 				newClient.setFollow(this.followPath);
-				return newClient.getResponse(httpRequest.getMethod(), newPath, httpRequest.getData());
+				response = newClient.getResponse(httpRequest.getMethod(), newPath, httpRequest.getData());
 			}
 		}
 		
