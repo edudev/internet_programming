@@ -20,6 +20,17 @@ public class HttpRequest {
 		this.path = path;
 	}
 
+	public HttpRequest(String httpMethod, String path,
+			List<HttpHeader> httpHeaders) {
+		this(httpMethod, path);
+		
+		if (httpHeaders != null) {
+			for (final HttpHeader header : httpHeaders) {
+				this.headers.add(header);
+			}
+		}
+	}
+
 	public void setHost(final String host) {
 		this.removeHeader("Host");
 		this.addHeader("Host", host);
@@ -50,19 +61,30 @@ public class HttpRequest {
 			throw new IllegalStateException("Request method or path not set!");
 		}
 
+		preprocessData();
+		
 		final PrintWriter out = new PrintWriter(outputStream);
 		
 		out.printf("%s %s %s\n", this.method, this.path, HTTP_VERSION);
 		for (final HttpHeader header : headers) {
 			out.printf("%s: %s\n", header.getName(), header.getValue());
 		}
+
+		out.printf("\n");
+		out.flush();
+
 		if (this.data != null) {
 			outputStream.write(data);
 		}
 
-		out.printf("\n");
-		out.flush();
 		outputStream.flush();
+	}
+
+	private void preprocessData() {
+		if (this.data != null) {
+			this.removeHeader("Content-Length");
+			this.addHeader("Content-Length", "" + this.data.length);
+		}
 	}
 
 	public String getMethod() {

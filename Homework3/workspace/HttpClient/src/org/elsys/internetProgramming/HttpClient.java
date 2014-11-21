@@ -1,13 +1,23 @@
 package org.elsys.internetProgramming;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class HttpClient {
 
 	private static final String HTTP_METHOD_GET = "GET";
+	private static final String HTTP_METHOD_POST = "POST";
+	private static final String DEFAULT_ENCODING = "UTF-8";
 	private final String host;
 	private boolean followPath;
 	private Socket socket;
@@ -38,20 +48,69 @@ public class HttpClient {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		final HttpClient httpClient = new HttpClient("google.com");
+		final HttpClient httpClient = new HttpClient("posttestserver.com");
 		httpClient.setFollow(true);
-		final HttpCharResponse response = httpClient.getResponse(HTTP_METHOD_GET, "/", null);
+		
+		final List<HttpHeader> httpHeaders = new LinkedList<HttpHeader>();
+		httpHeaders.add(new HttpHeader("content-type", "application/x-www-form-urlencoded"));
+		
+		final Map<String, String> userParams = getUserParams();
+		final String body = HttpClient.encodeURLString(userParams);
+
+		final HttpCharResponse response = httpClient.getResponse(HTTP_METHOD_POST, "/post.php", httpHeaders, body.getBytes());
 		
 		System.out.print(response.getBody());
 	}
 
-	public HttpCharResponse getResponse(String httpMethod, String path, byte[] data) throws IOException {
+	public static String encodeURLString(Map<String, String> userParams) throws UnsupportedEncodingException {
+		final StringBuilder result = new StringBuilder();
+		for (Map.Entry<String, String> entry : userParams.entrySet()) {
+			final String key = entry.getKey();
+			final String value = entry.getValue();
+			
+			if (result.length() != 0) {
+				result.append("&");
+			}
+			
+			result.append(URLEncoder.encode(key, DEFAULT_ENCODING));
+			result.append("=");
+			result.append(URLEncoder.encode(value, DEFAULT_ENCODING));
+		}
 		
-		final HttpRequest httpRequest = new HttpRequest(httpMethod, path);
+		return result.toString();
+	}
+
+	private static Map<String, String> getUserParams() throws IOException {
+		final Map<String, String> result = new HashMap<String, String>();
+		String key;
+		String value;
+
+		final InputStreamReader reader = new InputStreamReader(System.in);
+		final BufferedReader in = new BufferedReader(reader);
+		
+		key = in.readLine();
+		while (!key.isEmpty()) {
+			value = in.readLine();
+			
+			result.put(key, value);
+			key = in.readLine();
+		}
+		
+		return result;
+	}
+
+	private HttpCharResponse getResponse(String httpMethod, String path,
+			List<HttpHeader> httpHeaders, byte[] data) throws IOException {
+
+		final HttpRequest httpRequest = new HttpRequest(httpMethod, path, httpHeaders);
 		httpRequest.setHost(this.host);
 		httpRequest.setData(data);
 
 		return getResponse(httpRequest);
+	}
+
+	public HttpCharResponse getResponse(String httpMethod, String path, byte[] data) throws IOException {
+		return getResponse(httpMethod, path, null, data);
 	}
 
 	public HttpCharResponse getResponse(HttpRequest httpRequest) throws IOException {
