@@ -93,3 +93,19 @@ IV. HTTP
 ===============================================================================
 
 
+V. Javascript & jQuery
+===============================================================================
+Homework 1:
+    Add button to HTML;
+    On button click insert a new list item.
+
+Homework 2:
+    Practice jQuery selectors from a predefined page (elsys-bg.org):
+        name selectors;
+        id selectors;
+        class selectors;
+        child selectors;
+        mixed selectors;
+    Log at least 15 selected element(s) using different selectors;
+    DOM manimulation (insert an element before an other);
+ 
